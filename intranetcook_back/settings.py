@@ -129,15 +129,7 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-
-REST_FRAMEWORK  = {
-    # ...
-    
-    # 나머지 프레임 워크 설정 사전에 auth 설정을 추가합니다.
-    # 인증 설정
-    ' DEFAULT_AUTHENTICATION_CLASSES ' : [
-        ' rest_framework_jwt.authentication.JSONWebTokenAuthentication ' ,
-    ],
-    
-    # ...
-}
+# 인증 설정
+REST_FRAMEWORK  = get_conf("REST_FRAMEWORK")
+# JWT 설정
+JWT_AUTH  = get_conf("JWT_AUTH")
