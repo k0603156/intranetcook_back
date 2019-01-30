@@ -6,6 +6,7 @@ from rest_framework_jwt.settings import api_settings
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework import serializers
+from rest_framework.views import APIView
 
 
 # Get the JWT settings, add these lines after the import/from lines
@@ -14,9 +15,9 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
 
-class LoginView(generics.CreateAPIView,serializers.Serializer):
+class Login(APIView):
     """
-    POST auth/login/
+    POST  /api/auth/login/
     """
     # This permission class will overide the global permission
     # class setting
@@ -31,7 +32,7 @@ class LoginView(generics.CreateAPIView,serializers.Serializer):
         if user is not None:
             # login saves the user’s ID in the session,
             # using Django’s session framework.
-            login(request, user)
+            #login(request, user)->어드민 세션로그인
             serializer = TokenSerializer(data={
                 # using drf jwt utility functions to generate a token
                 "token": jwt_encode_handler(
@@ -40,3 +41,15 @@ class LoginView(generics.CreateAPIView,serializers.Serializer):
             serializer.is_valid()
             return Response(serializer.data)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+class Logout(APIView):
+    """
+    POST  /api/auth/logout/
+    """
+    def post(self, request, *args, **kwargs):
+        #request.user.auth_token.delete()
+        auth_token = request.data.get("token", "")
+        auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
+
+    # def get(self, request, format=None):
