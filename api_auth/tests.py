@@ -3,6 +3,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
-from .serializers import SongsSerializer
+from .serializers import AuthSerializer
 
 # tests for views

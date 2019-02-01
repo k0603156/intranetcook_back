@@ -24,6 +24,9 @@ class Login(APIView):
     permission_classes = (permissions.AllowAny,)
 
     queryset = User.objects.all()
+    def __init__(self):
+
+        pass
 
     def post(self, request, *args, **kwargs):
         username = request.data.get("username", "")
@@ -37,7 +40,8 @@ class Login(APIView):
                 # using drf jwt utility functions to generate a token
                 "token": jwt_encode_handler(
                     jwt_payload_handler(user)
-                )})
+                )
+                })
             serializer.is_valid()
             return Response(serializer.data)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
@@ -51,5 +55,11 @@ class Logout(APIView):
         auth_token = request.data.get("token", "")
         auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+def put(self):
 
+        pass
+
+def delete(self):
+
+        pass
     # def get(self, request, format=None):
